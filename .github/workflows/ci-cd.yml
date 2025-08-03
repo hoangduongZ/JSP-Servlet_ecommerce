@@ -24,9 +24,9 @@ jobs:
       - name: Deploy WAR to Remote Tomcat
         uses: appleboy/scp-action@v0.1.3
         with:
-          host: ${{ secrets.REMOTE_HOST }}  # 🔐 Biến môi trường chứa địa chỉ IP hoặc domain của server (khai báo trong Repository Secrets)
-          username: ${{ secrets.REMOTE_USER }}  # 👤 Tài khoản SSH kết nối vào server
-          password: ${{ secrets.REMOTE_PASSWORD }}  # 🔒 Mật khẩu SSH (nên dùng SSH key cho an toàn hơn)
+          host: 192.168.1.8  # 🔐 Biến môi trường chứa địa chỉ IP hoặc domain của server (khai báo trong Repository Secrets)
+          username: hoangdv  # 👤 Tài khoản SSH kết nối vào server
+          password: 123456@Ab  # 🔒 Mật khẩu SSH (nên dùng SSH key cho an toàn hơn)
           port: 22
           source: target/servlet-ecm-app.war  # 📦 Đường dẫn đến file WAR đã build
           target: /home/hoangdv/  # 📂 Thư mục deploy trên server (Tomcat sẽ tự load file WAR trong đây nếu autoDeploy được bật)
