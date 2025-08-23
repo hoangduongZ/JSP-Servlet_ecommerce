@@ -1,4 +1,4 @@
-package com.ecm.common;
+package com.ecm.health;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRegistration;
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 
-@WebServlet("/list")
+@WebServlet("/health/list-servlet-mappings")
 public class ListServletMappings extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {

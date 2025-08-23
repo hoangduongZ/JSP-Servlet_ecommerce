@@ -1,6 +1,5 @@
 package com.ecm;
 
-import com.ecm.auth.dto.Test;
 import com.ecm.common.DBUtil;
 
 import java.sql.Connection;
@@ -12,8 +11,5 @@ public class Main {
         if (connection!= null){
             System.out.println("connect success! "+ connection.getCatalog());
         }
-
-        Test test = Test.builder().test1("test1").test2("test2").build();
-        System.out.println(test);
     }
 }

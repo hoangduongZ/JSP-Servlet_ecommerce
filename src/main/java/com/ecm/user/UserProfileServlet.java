@@ -1,4 +1,20 @@
 package com.ecm.user;
 
-public class UserProfileServlet {
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.ServletException;
+import javax.servlet.RequestDispatcher;
+import java.io.IOException;
+
+@WebServlet("/user/profile")
+public class UserProfileServlet extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("text/html; charset=UTF-8");
+        resp.setCharacterEncoding("UTF-8");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/views/client/profile.jsp");
+        dispatcher.forward(req, resp);
+    }
 }

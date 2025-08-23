@@ -45,11 +45,11 @@
     </style>
 </head>
 <body>
-<div class="error-container">
-    <h1>500</h1>
-    <p>Xin lỗi, có lỗi hệ thống đang xảy ra.</p>
-    <p>Có sự cố liên quan đến hệ thống.</p>
-    <a href="/" class="back-button">Trở về trang chủ</a>
-</div>
+    <div class="error-container">
+        <h1>404</h1>
+        <p>Xin lỗi, trang bạn đang tìm kiếm không tồn tại.</p>
+        <p>Có thể trang đã bị di chuyển hoặc xóa.</p>
+        <a href="/" class="back-button">Trở về trang chủ</a>
+    </div>
 </body>
 </html>

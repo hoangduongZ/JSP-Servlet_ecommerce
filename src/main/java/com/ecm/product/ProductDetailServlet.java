@@ -1,6 +1,5 @@
 package com.ecm.product;
 
-import com.ecm.common.util.ServletUtil;
 import com.ecm.model.Product;
 
 import javax.servlet.RequestDispatcher;
@@ -13,8 +12,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/products")
-public class ProductServlet extends HttpServlet {
+@WebServlet("/products-detail")
+public class ProductDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html; charset=UTF-8");
@@ -25,7 +24,7 @@ public class ProductServlet extends HttpServlet {
         req.setAttribute("totalPages", 10);
         req.setAttribute("currentPage", 5);
 
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/views/admin/product.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/views/client/product-detail.jsp");
         dispatcher.forward(req, resp);
     }
 }
