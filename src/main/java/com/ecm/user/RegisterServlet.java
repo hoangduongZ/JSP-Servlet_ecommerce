@@ -1,4 +1,4 @@
-package com.ecm.auth;
+package com.ecm.user;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

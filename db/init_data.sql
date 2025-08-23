@@ -212,6 +212,11 @@ INSERT INTO log (level, action, message, user_id, ip_address) VALUES
 ('INFO', 'DAILY_BACKUP', 'Daily database backup completed successfully', NULL, 'SYSTEM');
 
 -- Update sequences to current values
+-- Vấn đề phát sinh:
+-- Khi insert không chỉ định ID: PostgreSQL dùng sequence → OK
+-- Khi insert có chỉ định ID cụ thể (như trong mock data): Sequence không được cập nhật  -> Lỗi trùng ID khi insert tiếp theo
+-- Giải pháp: Cập nhật lại sequence sau khi insert dữ liệu mock
+-- Câu lệnh mẫu: SELECT setval('sequence_name', current_max_id);
 SELECT setval('users_user_id_seq', (SELECT MAX(user_id) FROM users));
 SELECT setval('categories_category_id_seq', (SELECT MAX(category_id) FROM categories));  
 SELECT setval('products_product_id_seq', (SELECT MAX(product_id) FROM products));
