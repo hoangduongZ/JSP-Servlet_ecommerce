@@ -1,37 +1,37 @@
-name: Build & Deploy Servlet App  # 📛 Tên workflow sẽ hiển thị trên GitHub Actions UI
+# name: Build & Deploy Servlet App  # 📛 Tên workflow sẽ hiển thị trên GitHub Actions UI
 
-on:
-  push:
-    branches: [ "main" ]  # 🚀 Workflow được kích hoạt khi có push lên nhánh "main"
+# on:
+#   push:
+#     branches: [ "main" ]  # 🚀 Workflow được kích hoạt khi có push lên nhánh "main"
 
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest  # 💻 Chạy job trên máy ảo Ubuntu mới nhất do GitHub cung cấp
+# jobs:
+#   build-and-deploy:
+#     runs-on: ubuntu-latest  # 💻 Chạy job trên máy ảo Ubuntu mới nhất do GitHub cung cấp
 
-    steps:
-      - name: Clone source
-        uses: actions/checkout@v3  # ✅ Bước 1: Checkout code từ repo GitHub về máy runner
+#     steps:
+#       - name: Clone source
+#         uses: actions/checkout@v3  # ✅ Bước 1: Checkout code từ repo GitHub về máy runner
 
-      - name: Setup Java 8
-        uses: actions/setup-java@v3
-        with:
-          java-version: '8'  # 🔧 Cài đúng phiên bản Java 8 phù hợp cho app Servlet
-          distribution: 'temurin'  # 📦 Sử dụng bản Temurin (OpenJDK phổ biến, ổn định)
+#       - name: Setup Java 8
+#         uses: actions/setup-java@v3
+#         with:
+#           java-version: '8'  # 🔧 Cài đúng phiên bản Java 8 phù hợp cho app Servlet
+#           distribution: 'temurin'  # 📦 Sử dụng bản Temurin (OpenJDK phổ biến, ổn định)
 
-      - name: Build WAR with Maven
-        run: mvn clean package  # 🛠️ Bước 2: Dùng Maven để build project và tạo file WAR trong thư mục target/
+#       - name: Build WAR with Maven
+#         run: mvn clean package  # 🛠️ Bước 2: Dùng Maven để build project và tạo file WAR trong thư mục target/
 
-      - name: Deploy WAR to Remote Tomcat
-        uses: appleboy/scp-action@v0.1.3
-        with:
-          host: 192.168.1.8  # 🔐 Biến môi trường chứa địa chỉ IP hoặc domain của server (khai báo trong Repository Secrets)
-          username: hoangdv  # 👤 Tài khoản SSH kết nối vào server
-          password: 123456@Ab  # 🔒 Mật khẩu SSH (nên dùng SSH key cho an toàn hơn)
-          port: 22
-          source: target/servlet-ecm-app.war  # 📦 Đường dẫn đến file WAR đã build
-          target: /home/hoangdv/  # 📂 Thư mục deploy trên server (Tomcat sẽ tự load file WAR trong đây nếu autoDeploy được bật)
-          timeout: 300s  # Tăng timeout từ mặc định
-          command_timeout: 10m
-          use_insecure_cipher: false
-          rm: false
-          debug: true  # Bật debug để xem log chi tiết
+#       - name: Deploy WAR to Remote Tomcat
+#         uses: appleboy/scp-action@v0.1.3
+#         with:
+#           host: 192.168.1.8  # 🔐 Biến môi trường chứa địa chỉ IP hoặc domain của server (khai báo trong Repository Secrets)
+#           username: hoangdv  # 👤 Tài khoản SSH kết nối vào server
+#           password: 123456@Ab  # 🔒 Mật khẩu SSH (nên dùng SSH key cho an toàn hơn)
+#           port: 22
+#           source: target/servlet-ecm-app.war  # 📦 Đường dẫn đến file WAR đã build
+#           target: /home/hoangdv/  # 📂 Thư mục deploy trên server (Tomcat sẽ tự load file WAR trong đây nếu autoDeploy được bật)
+#           timeout: 300s  # Tăng timeout từ mặc định
+#           command_timeout: 10m
+#           use_insecure_cipher: false
+#           rm: false
+#           debug: true  # Bật debug để xem log chi tiết
