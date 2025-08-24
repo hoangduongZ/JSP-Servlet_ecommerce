@@ -57,7 +57,7 @@
                     <p class="text-sm text-[#6C757D] mt-2">Tạo tài khoản mới để mua sắm</p>
                 </div>
 
-                <form id="registerForm" class="space-y-6">
+                <form action="${pageContext.request.contextPath}/register" method="post" id="registerForm" class="space-y-6">
                     <!-- Full Name -->
                     <div>
                         <label for="fullName" class="text-sm mb-1 block text-[#212529] font-medium">Họ và tên</label>
@@ -296,7 +296,7 @@
 
             const strengths = ['strength1', 'strength2', 'strength3', 'strength4'];
             const colors = ['#DC3545', '#FFC107', '#0D6EFD', '#198754'];
-            const texts = ['R?t y?u', 'Y?u', 'Trung b?nh', 'M?nh', 'R?t m?nh'];
+            const texts = ['Very yeu', 'Yeu', 'Medium', 'Manh', 'Rat manh'];
 
             // Reset all
             strengths.forEach(id => {
@@ -438,11 +438,10 @@
             submitBtn.disabled = true;
             submitText.classList.add('hidden');
             submitLoading.classList.remove('hidden');
-            
-            // Simulate API call
+            document.getElementById('registerForm').submit();
             setTimeout(() => {
                 alert('Đăng ký thành công! Vui lòng kiểm tra email để xác thực tài khoản.');
-
+                // Post form actions here (e.g., redirect to login)
                 // Reset form
                 this.reset();
                 checkPasswordStrength('');

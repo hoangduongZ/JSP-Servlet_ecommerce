@@ -37,7 +37,7 @@
         <!-- Top Bar -->
         <div class="hidden md:flex items-center justify-between py-2 text-xs border-b border-gray-100">
             <div class="flex space-x-4">
-                <span class="text-[#6C757D]">Hotline: 1900-1234</span>
+                <span class="text-[#6C757D]">Hotlike2: 1900-1235</span>
                 <span class="text-[#6C757D]">support@ecommerce.vn</span>
                 <a href="#" class="text-[#6C757D] hover:text-[#0D6EFD]">Về chúng tôi</a>
                 <a href="#" class="text-[#6C757D] hover:text-[#0D6EFD]">Liên hệ</a>

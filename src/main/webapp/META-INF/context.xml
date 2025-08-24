@@ -1,14 +1,4 @@
 <!--    Lưu thông tin cấu hình cho server (container), ví dụ: Tomcat, Jetty.-->
 <!--    Không phải dành cho servlet hoặc client truy cập, mà để server đọc khi deploy app.-->
-<Context>
-    <Resource name="jdbc/MyDB"
-              auth="Container"
-              type="javax.sql.DataSource"
-              maxTotal="100"
-              maxIdle="30"
-              maxWaitMillis="10000"
-              username="dbuser"
-              password="dbpass"
-              driverClassName="com.mysql.cj.jdbc.Driver"
-              url="jdbc:mysql://localhost:3306/mydb"/>
+<Context reloadable="true" crossContext="true">
 </Context>

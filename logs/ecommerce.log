@@ -1,0 +1,19 @@
+2025-08-23 21:24:55 ERROR [main] com.ecm.util.DBUtil - com.ecm.util.DBUtil
+2025-08-23 21:25:08 ERROR [main] com.ecm.util.DBUtil - com.ecm.util.DBUtil
+2025-08-23 21:27:53 ERROR [main] com.ecm.util.DBUtil - com.ecm.util.DBUtil
+2025-08-23 21:28:13 ERROR [main] com.ecm.util.DBUtil - com.ecm.util.DBUtil
+2025-08-23 21:30:51 ERROR [main] com.ecm.util.DBUtil - com.ecm.util.DBUtil
+2025-08-24 08:26:56 INFO  [main] com.ecm.session_based.RedisConnectionManager - Redis pool initialized: localhost:6379
+2025-08-24 08:26:56 INFO  [main] com.ecm.session_based.RedisConnectionManager - Redis connected: PONG
+2025-08-24 08:27:38 INFO  [main] com.ecm.session_based.RedisConnectionManager - Redis pool initialized: localhost:6379
+2025-08-24 08:27:38 INFO  [main] com.ecm.session_based.RedisConnectionManager - Redis connected: PONG
+2025-08-24 08:40:51 INFO  [main] com.ecm.session_based.RedisConnectionManager - Redis pool initialized: localhost:6379
+2025-08-24 08:40:51 INFO  [main] com.ecm.session_based.RedisConnectionManager - Redis connected: PONG
+2025-08-24 08:41:18 INFO  [main] com.ecm.session_based.RedisConnectionManager - Redis pool initialized: localhost:6379
+2025-08-24 08:41:19 INFO  [main] com.ecm.session_based.RedisConnectionManager - Redis connected: PONG
+2025-08-24 08:42:03 INFO  [main] com.ecm.session_based.RedisConnectionManager - Redis pool initialized: localhost:6379
+2025-08-24 08:42:03 INFO  [main] com.ecm.session_based.RedisConnectionManager - Redis connected: PONG
+2025-08-24 08:48:15 INFO  [main] com.ecm.session_based.RedisConnectionManager - Redis pool initialized: localhost:6379
+2025-08-24 08:48:15 INFO  [main] com.ecm.session_based.RedisConnectionManager - Redis connected: PONG
+2025-08-24 08:55:35 INFO  [main] com.ecm.session_based.RedisConnectionManager - Redis pool initialized: localhost:6379
+2025-08-24 08:55:35 INFO  [main] com.ecm.session_based.RedisConnectionManager - Redis connected: PONG
