@@ -55,7 +55,7 @@
     <!--    START HOME SERVLET-->
     <servlet>
         <servlet-name>HomeServlet</servlet-name>
-        <servlet-class>com.ecm.home.HomeServlet</servlet-class>
+        <servlet-class>com.ecm.features.home.HomeServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
@@ -63,7 +63,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>HomePageServlet</servlet-name>
-        <servlet-class>com.ecm.home.HomePageServlet</servlet-class>
+        <servlet-class>com.ecm.features.home.HomePageServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>HomePageServlet</servlet-name>

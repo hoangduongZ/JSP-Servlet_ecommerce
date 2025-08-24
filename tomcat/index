@@ -1,6 +1,0 @@
-# window cmd:
-## find port
-- netstat -ano | findstr ":8080"
-- netstat -ano | findstr ":8005"
-## kill port:
-- taskkill /PID <pid> /F

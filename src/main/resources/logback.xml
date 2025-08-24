@@ -1,5 +1,5 @@
 <configuration>
-
+    <statusListener class="ch.qos.logback.core.status.NopStatusListener" /> <!-- disable internal logback logging -->
     <!-- Console Appender -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -16,9 +16,26 @@
         </encoder>
     </appender>
 
+<!--    log to db-->
+    <appender name="DB" class="ch.qos.logback.classic.db.DBAppender">
+        <connectionSource class="ch.qos.logback.core.db.DataSourceConnectionSource">
+            <dataSource class="org.postgresql.ds.PGSimpleDataSource">
+                <serverName>localhost</serverName>
+                <portNumber>5555</portNumber>
+                <databaseName>ecommerce_servlet</databaseName>
+                <user>postgres</user>
+                <password>123456@Ab</password>
+                <currentSchema>logging</currentSchema>
+            </dataSource>
+        </connectionSource>
+    </appender>
+
+
+
     <!-- DEBUG < INFO < WARN < ERROR -->
     <root level="debug">  
         <appender-ref ref="CONSOLE" />
         <appender-ref ref="FILE" />
+        <appender-ref ref="DB" />
     </root>
 </configuration>
