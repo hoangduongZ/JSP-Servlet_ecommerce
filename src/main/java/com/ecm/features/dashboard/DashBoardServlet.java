@@ -14,7 +14,7 @@ public class DashBoardServlet extends HttpServlet {
             throws javax.servlet.ServletException, java.io.IOException {
         resp.setContentType("text/html; charset=UTF-8");
         resp.setCharacterEncoding("UTF-8");
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/views/client/dashboard.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/views/admin/dashboard.jsp");
         dispatcher.forward(req, resp);
     }
 }

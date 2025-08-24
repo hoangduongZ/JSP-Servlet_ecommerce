@@ -1,42 +1,42 @@
 package com.ecm.features.user;
 
-import com.ecm.session_based.RedisConnectionManager;
-import com.ecm.session_based.SessionManager;
+import com.ecm.session_based.RedisLoadProperties;
+import com.ecm.session_based.RedisSessionManager;
+import com.ecm.util.GlobalUtil;
 
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@WebServlet("/logout")
 public class LogoutServlet extends HttpServlet {
-    private SessionManager sessionManager;
+    private RedisSessionManager redisSessionManager;
     @Override
     public void init() {
-        sessionManager = new SessionManager(RedisConnectionManager.getPool());
+        redisSessionManager = new RedisSessionManager(RedisLoadProperties.getPool());
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
         String sessionId = null;
+        String rememberMeToken = null;
         Cookie[] cookies = req.getCookies();
         if (cookies != null) {
             for (Cookie c : cookies) {
-                if ("SESSION_ID".equals(c.getName())) {
+                if ("APP_SESSION".equals(c.getName())) {
                     sessionId = c.getValue();
+                }
+                if ("REMEMBERME".equals(c.getName())) {
+                    rememberMeToken = c.getValue();
                 }
             }
         }
-        if (sessionId != null) {
-            sessionManager.invalidate(sessionId);
-        }
-
-        // Xóa cookie phía client (override cookie cũ với maxAge=0)
-        Cookie cookie = new Cookie("SESSION_ID", "");
-        cookie.setMaxAge(0);
-        resp.addCookie(cookie);
-
+        GlobalUtil.clearListSession(redisSessionManager, sessionId, rememberMeToken);
+        GlobalUtil.clearListCookie(resp, sessionId, rememberMeToken);
         resp.sendRedirect("/login");
     }
 }

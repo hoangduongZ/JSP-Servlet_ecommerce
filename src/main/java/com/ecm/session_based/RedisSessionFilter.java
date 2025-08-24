@@ -1,44 +1,67 @@
 package com.ecm.session_based;
 
-import javax.servlet.annotation.WebFilter;
-import javax.servlet.*;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 ;
 
-@WebFilter("/*")
-public class AuthFilter implements Filter {
-    private SessionManager sessionManager;
+//@WebFilter("/*")
+public class RedisSessionFilter implements Filter {
+    private final RedisSessionManager sessionManager = new RedisSessionManager(RedisLoadProperties.getPool());
+    private final RememberMeManager rememberMeManager = new RememberMeManager(RedisLoadProperties.getPool());
+    private final int TIMEOUT = 30 * 60; // 30 minutes
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        sessionManager = new SessionManager(RedisConnectionManager.getPool());
     }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        HttpServletRequest req = (HttpServletRequest) request;
-        HttpServletResponse resp = (HttpServletResponse) response;
+    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+            throws IOException, ServletException {
+        HttpServletRequest request = (HttpServletRequest) req;
+        HttpServletResponse response = (HttpServletResponse) res;
 
-        String path = req.getRequestURI();
+        String path = request.getRequestURI();
         if (isPublicPath(path)) {
-            chain.doFilter(req, resp);
+            chain.doFilter(request, response);
             return;
         }
 
-        String sessionId = getSessionIdFromCookies(req.getCookies());
-
-        if (sessionId != null) {
-            String userId = sessionManager.getUserId(sessionId);
-            if (userId != null) {
-                req.setAttribute("userId", userId);
-                chain.doFilter(req, resp);
-                return;
+        Map<String, String> cookies = getSessionIdFromCookie(request);
+        String sessionId = cookies.get("sessionId");
+        String rememberMeToken = cookies.get("rememberMe");
+        if (cookies.isEmpty() || sessionManager.getAttribute(sessionId, "userId") == null) {
+            if (rememberMeToken != null) {
+                String userId = rememberMeManager.validateRememberMe(rememberMeToken);
+                if (userId != null) {
+                    // tái tạo session từ remember me
+                    sessionManager.createSession("userId", userId);
+                    Cookie newSession = new Cookie("APP_SESSION", sessionId);
+                    newSession.setHttpOnly(true);
+                    newSession.setMaxAge(TIMEOUT);
+                    newSession.setPath("/");
+                    response.addCookie(newSession);
+                }
             }
         }
-        resp.sendRedirect("/login");
+
+        String userId = sessionManager.getAttribute(sessionId, "userId");
+        if (userId != null) {
+            req.setAttribute("userId", userId);
+            chain.doFilter(request, response);
+            return;
+        }
+        response.sendRedirect("/login");
     }
 
     private boolean isPublicPath(String path) {
@@ -47,16 +70,20 @@ public class AuthFilter implements Filter {
                 || path.contains("/css/") || path.contains("/js/") || path.contains("/assets/");
     }
 
-    private String getSessionIdFromCookies(Cookie[] cookies) {
-        if (cookies != null) {
-            for (Cookie c : cookies) {
-                if ("SESSION_ID".equals(c.getName())) {
-                    return c.getValue();
+    private Map<String, String> getSessionIdFromCookie(HttpServletRequest request) {
+        Map<String, String> result = new HashMap<>();
+        if (request.getCookies() != null) {
+            for (Cookie cookie : request.getCookies()) {
+                if ("APP_SESSION".equals(cookie.getName())) {
+                    result.put("sessionId", cookie.getValue());
+                } else if ("REMEMBERME".equals(cookie.getName())) {
+                    result.put("rememberMe", cookie.getValue());
                 }
             }
         }
-        return null;
+        return result;
     }
+
 
     @Override
     public void destroy() {

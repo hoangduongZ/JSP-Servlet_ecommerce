@@ -5,31 +5,49 @@ import redis.clients.jedis.JedisPool;
 
 import java.util.UUID;
 
-public class SessionManager {
+public class RedisSessionManager {
     private static final String PREFIX = "session:";
     private static final int EXPIRE_SECONDS = 1800; // 30 phút
 
     private final JedisPool jedisPool;
 
-    public SessionManager(JedisPool jedisPool) {
+    public RedisSessionManager(JedisPool jedisPool) {
         this.jedisPool = jedisPool;
     }
 
-    public String createSession(String userId) {
+    public String createSession(String name, String value) {
         String sessionId = UUID.randomUUID().toString();
+        String redisKey = PREFIX + sessionId;
         try (Jedis jedis = jedisPool.getResource()) {
-            jedis.setex(PREFIX + sessionId, EXPIRE_SECONDS, userId);
+            jedis.hset(redisKey, name, value);
+            jedis.expire(redisKey, EXPIRE_SECONDS);
         }
         return sessionId;
     }
 
-    public String getUserId(String sessionId) {
+    public void refreshSession(String sessionId) {
         try (Jedis jedis = jedisPool.getResource()) {
-            return jedis.get(PREFIX + sessionId);
+            jedis.expire(PREFIX + sessionId, EXPIRE_SECONDS);
+        }
+    }
+
+    public String getAttribute(String sessionId, String name) {
+        if (sessionId == null) return null;
+        try (Jedis jedis = jedisPool.getResource()) {
+            return jedis.hget(PREFIX + sessionId, name);
+        }
+    }
+
+    public void setAttribute(String sessionId, String name, String value) {
+        if (sessionId == null) return;
+        try (Jedis jedis = jedisPool.getResource()) {
+            jedis.hset(PREFIX + sessionId, name, value);
+            jedis.expire(PREFIX + sessionId, EXPIRE_SECONDS);
         }
     }
 
     public void invalidate(String sessionId) {
+        if (sessionId == null) return;
         try (Jedis jedis = jedisPool.getResource()) {
             jedis.del(PREFIX + sessionId);
         }

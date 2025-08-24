@@ -74,7 +74,7 @@ function loginWithGoogle() {
 }
 
 function loginWithFacebook() {
-    alert('?ang chuy?n h??ng ??n Facebook...');
+    alert('The feature is developing...');
     // Here you would redirect to Facebook OAuth
 }
 
@@ -136,47 +136,49 @@ document.getElementById('loginForm').addEventListener('submit', function (e) {
     submitText.classList.add('hidden');
     submitLoading.classList.remove('hidden');
 
+    document.getElementById('loginForm').submit();
+
     // Simulate API call
-    setTimeout(() => {
-        // Demo authentication
-        const validCredentials = [
-            {loginId: 'customer@demo.com', password: '123456', role: 'customer', name: 'Kh?ch h?ng Demo'},
-            {loginId: 'admin@demo.com', password: 'admin123', role: 'admin', name: 'Admin Demo'},
-            {loginId: 'hoangdvdinos@gmail.com', password: 'password123', role: 'customer', name: 'Ho?ng ?inh'},
-            {loginId: '0987654321', password: '123456', role: 'customer', name: 'Ng??i d?ng S?T'}
-        ];
+    // setTimeout(() => {
+    //     // Demo authentication
+    //     const validCredentials = [
+    //         {loginId: 'customer@demo.com', password: '123456', role: 'customer', name: 'Kh?ch h?ng Demo'},
+    //         {loginId: 'admin@demo.com', password: 'admin123', role: 'admin', name: 'Admin Demo'},
+    //         {loginId: 'hoangdvdinos@gmail.com', password: 'password123', role: 'customer', name: 'Ho?ng ?inh'},
+    //         {loginId: '0987654321', password: '123456', role: 'customer', name: 'Ng??i d?ng S?T'}
+    //     ];
 
-        const user = validCredentials.find(cred =>
-            cred.loginId === loginId && cred.password === password
-        );
+    //     const user = validCredentials.find(cred =>
+    //         cred.loginId === loginId && cred.password === password
+    //     );
 
-        if (user) {
-            // Store user info (in real app, use proper session management)
-            localStorage.setItem('currentUser', JSON.stringify({
-                name: user.name,
-                email: user.loginId,
-                role: user.role,
-                rememberMe: rememberMe,
-                loginTime: new Date().toISOString()
-            }));
+    //     if (user) {
+    //         // Store user info (in real app, use proper session management)
+    //         localStorage.setItem('currentUser', JSON.stringify({
+    //             name: user.name,
+    //             email: user.loginId,
+    //             role: user.role,
+    //             rememberMe: rememberMe,
+    //             loginTime: new Date().toISOString()
+    //         }));
 
-            alert(`Đăng nhập th?nh c?ng! Ch?o m?ng ${user.name}`);
+    //         alert(`Đăng nhập th?nh c?ng! Ch?o m?ng ${user.name}`);
 
-            // Redirect based on role
-            if (user.role === 'admin') {
-                window.location.href = '/admin/dashboard';
-            } else {
-                window.location.href = '/';
-            }
-        } else {
-            showLoginError('Email/S?T ho?c Mật khẩu kh?ng ch?nh x?c');
-        }
+    //         // Redirect based on role
+    //         if (user.role === 'admin') {
+    //             window.location.href = '/admin/dashboard';
+    //         } else {
+    //             window.location.href = '/';
+    //         }
+    //     } else {
+    //         showLoginError('Email/S?T ho?c Mật khẩu kh?ng ch?nh x?c');
+    //     }
 
-        // Reset loading state
-        submitBtn.disabled = false;
-        submitText.classList.remove('hidden');
-        submitLoading.classList.add('hidden');
-    }, 1500);
+    //     // Reset loading state
+    //     submitBtn.disabled = false;
+    //     submitText.classList.remove('hidden');
+    //     submitLoading.classList.add('hidden');
+    // }, 1500);
 });
 
 // Forgot password form submission

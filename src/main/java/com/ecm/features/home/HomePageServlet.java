@@ -8,7 +8,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import java.io.IOException;
 
-@WebServlet(name = "HomePageServlet", urlPatterns = {"/home"})
+// @WebServlet(name = "HomePageServlet", urlPatterns = {"/home"})
 public class HomePageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
