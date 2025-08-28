@@ -195,7 +195,7 @@
                         <div class="bg-white rounded-xl p-6 mb-4">
                             <div class="w-full h-48 bg-gray-200 rounded-lg mb-4"
                                  style="overflow: hidden; object-fit: contain;">
-                                <img src="/assets/images/dev.png" alt="Download on App Store"
+                                <img src="/assets/img/dev.png" alt="Download on App Store"
                                      alt="Download on App Store">
                             </div>
                             <h3 class="text-[#212529] font-bold text-lg mb-2">iPhone 15 Pro Max</h3>
@@ -396,7 +396,7 @@
                     <div class="bg-gray-200 rounded-full h-2 mb-1">
                         <div class="bg-[#FFC107] h-2 rounded-full" style="width: 85%"></div>
                     </div>
-                    <span class="text-xs text-[#6C757D]">?? b?n 3,421</span>
+                    <span class="text-xs text-[#6C757D]">Da ban 3,421</span>
                 </div>
             </div>
 
@@ -751,11 +751,11 @@
                 <h4 class="font-bold mb-4">Download apps</h4>
                 <div class="space-y-3">
                     <a href="#" class="block">
-                        <img src="/assets/images/dev.png" alt="Download on App Store"
+                        <img src="/assets/img/dev.png" alt="Download on App Store"
                              alt="Download on App Store" class="h-10">
                     </a>
                     <a href="#" class="block">
-                        <img src="/assets/images/dev.png" alt="Download on App Store"
+                        <img src="/assets/img/dev.png" alt="Download on App Store"
                              alt="Download on App Store" class="h-10">
                     </a>
                 </div>

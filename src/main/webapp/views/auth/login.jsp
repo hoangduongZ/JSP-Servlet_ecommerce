@@ -22,7 +22,7 @@
             
             <!-- Navigation -->
             <nav class="hidden md:flex space-x-6">
-                <a href="#" class="text-[#6C757D] hover:text-[#0D6EFD] font-medium transition-colors duration-200">Trang chủ</a>
+                <a href="${pageContext.request.contextPath}/" class="text-[#6C757D] hover:text-[#0D6EFD] font-medium transition-colors duration-200">Trang chủ</a>
                 <a href="#" class="text-[#6C757D] hover:text-[#0D6EFD] font-medium transition-colors duration-200">Sản phẩm</a>
                 <a href="#" class="text-[#6C757D] hover:text-[#0D6EFD] font-medium transition-colors duration-200">Liên hệ</a>
             </nav>
@@ -58,12 +58,12 @@
                 </div>
 
                 <!-- Login Form -->
-                <form id="loginForm" class="space-y-6">
+                <form id="loginForm" action="${pageContext.request.contextPath}/login" method="post" class="space-y-6">
                     <!-- Email/Username -->
                     <div>
-                        <label for="loginId" class="text-sm mb-1 block text-[#212529] font-medium">Email hoặc số diện thoại</label>
-                        <input type="text" id="loginId" name="loginId" class="w-full h-10 px-3 py-2 border border-[#CED4DA] rounded-md focus:outline-none focus:ring-2 focus:ring-[#0D6EFD] transition-colors duration-200" placeholder="Nhập Email hoặc số diện thoại">
-                        <span id="loginIdError" class="text-xs text-[#DC3545] mt-1 hidden">Vui l?ng Nhập Email hoặc số diện thoại</span>
+                        <label for="loginId" class="text-sm mb-1 block text-[#212529] font-medium">Email</label>
+                        <input type="text" id="loginId" name="email" class="w-full h-10 px-3 py-2 border border-[#CED4DA] rounded-md focus:outline-none focus:ring-2 focus:ring-[#0D6EFD] transition-colors duration-200" placeholder="Nhập Email hoặc số diện thoại">
+                        <span id="loginIdError" class="text-xs text-[#DC3545] mt-1 hidden">Vui long Nhập Email hoặc số diện thoại</span>
                     </div>
 
                     <!-- Password -->
@@ -78,7 +78,7 @@
                                 </svg>
                             </button>
                         </div>
-                        <span id="passwordError" class="text-xs text-[#DC3545] mt-1 hidden">Vui l?ng Nhập Mật khẩu</span>
+                        <span id="passwordError" class="text-xs text-[#DC3545] mt-1 hidden">Vui lòng nhập mật khẩu</span>
                     </div>
 
                     <!-- Remember Me & Forgot Password -->
@@ -108,7 +108,7 @@
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                             </svg>
-                            ?ang Đăng nhập...
+                            Dang Đăng nhập...
                         </span>
                     </button>
 
@@ -264,6 +264,6 @@
         </div>
     </footer>
 
-    <script src="/js/home.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/js/login.js"></script>
 </body>
 </html>

@@ -23,9 +23,13 @@
             <!-- User Info -->
             <div class="flex items-center space-x-4">
                 <span class="text-sm text-[#6C757D]">Xin chào, <strong>hoangdvdinos</strong></span>
-                <button class="bg-[#DC3545] text-white rounded-md px-3 py-1 text-sm font-medium hover:bg-[#BB2D3B] cursor-pointer transition-colors duration-200">
-                    Đăng xuất
-                </button>
+                <form action="${pageContext.request.contextPath}/logout">
+                    <button type="submit"
+                            class="bg-[#DC3545] text-white rounded-md px-3 py-1 text-sm font-medium hover:bg-[#BB2D3B] cursor-pointer transition-colors duration-200">
+                        Đăng xuất
+                    </button>
+                </form>
+
             </div>
         </div>
     </header>

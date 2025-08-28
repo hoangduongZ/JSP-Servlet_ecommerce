@@ -1,4 +1,4 @@
-package com.ecm.features.user;
+package com.ecm.features.user.auth;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ecm.features.user.UserService;
 import com.ecm.features.user.dto.RegisterForm;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
@@ -59,7 +60,7 @@ public class RegisterServlet extends HttpServlet {
         }
         req.setAttribute("error", error);
         req.setAttribute("success", success);
-        req.getRequestDispatcher("register.jsp").forward(req, resp);
+        req.getRequestDispatcher("/views/auth/register.jsp").forward(req, resp);
     }
 
 }

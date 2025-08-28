@@ -12,11 +12,11 @@ import redis.clients.jedis.JedisPoolConfig;
 
 //import redis.clients.jedis.Jedis;
 
-public class RedisConnectionManager {
-    private static final Logger logger = LoggerFactory.getLogger(RedisConnectionManager.class.getName());
+public class RedisLoadProperties {
+    private static final Logger logger = LoggerFactory.getLogger(RedisLoadProperties.class.getName());
     @Getter
     private static JedisPool pool;
-    private RedisConnectionManager() {
+    private RedisLoadProperties() {
     }
 
     static {
