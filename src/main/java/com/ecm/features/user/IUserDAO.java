@@ -1,4 +1,9 @@
 package com.ecm.features.user;
 
-public interface IUserDao {
+import com.ecm.model.User;
+
+public interface IUserDAO {
+    boolean isEmailExists(String email);
+    boolean registerUser(User user);
+    User getUserByEmail(String email);
 }

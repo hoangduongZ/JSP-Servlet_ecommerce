@@ -1,6 +1,7 @@
-package com.ecm.features.user;
+package com.ecm.features.user.auth;
 
 import com.ecm.exception.EcmException;
+import com.ecm.features.user.UserService;
 import com.ecm.model.User;
 import com.ecm.session_based.RedisLoadProperties;
 import com.ecm.session_based.RedisSessionManager;
@@ -15,6 +16,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
@@ -57,7 +60,8 @@ public class LoginServlet extends HttpServlet {
 
         if (loginService.validateCredentials(email, password)) {
             User user = userService.getUserByEmail(email);
-            String sessionId = sessionManager.createSession("userId", String.valueOf(user.getUserId()));
+            Map<String, String> attributes = saveUserInSession(req, user);
+            String sessionId = sessionManager.createSession(attributes);
 
             // Set cookie sessionId về cho client
             Cookie cookie = new Cookie("APP_SESSION", sessionId);
@@ -76,5 +80,14 @@ public class LoginServlet extends HttpServlet {
             req.setAttribute("error", "Sai email hoặc mật khẩu!");
             req.getRequestDispatcher("/views/auth/login.jsp").forward(req, resp);
         }
+    }
+
+    private Map<String, String> saveUserInSession(HttpServletRequest req, User user) {
+        Map<String, String> attributes = new HashMap<>();
+        attributes.put("userId", String.valueOf(user.getUserId()));
+        attributes.put("email", user.getEmail());
+        attributes.put("role", user.getRole());
+        sessionManager.createSession(attributes);
+        return attributes;
     }
 }

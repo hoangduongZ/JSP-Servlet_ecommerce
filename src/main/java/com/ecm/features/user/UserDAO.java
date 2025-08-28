@@ -5,13 +5,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.ecm.exception.EcmException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ecm.model.User;
 import com.ecm.util.DBUtil;
 
-public class UserDAO {
+public class UserDAO implements IUserDAO{
     private final Logger logger = LoggerFactory.getLogger(UserDAO.class);
 
     public boolean isEmailExists(String email) {
@@ -23,7 +24,7 @@ public class UserDAO {
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
             return rs.next();
-        } catch (Exception e) {
+        } catch (EcmException | SQLException e) {
             logger.error("Error checking email existence: {}", email, e);
             return true;
         } finally {
@@ -42,7 +43,7 @@ public class UserDAO {
         }
     }
 
-    public boolean createUser(User user) {
+    public boolean registerUser(User user) {
         Connection conn = null;
         PreparedStatement ps = null;
         try {

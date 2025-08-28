@@ -1,5 +1,7 @@
-package com.ecm.features.user;
+package com.ecm.features.user.auth;
 
-public interface ILoginService extends IUserService {
+import com.ecm.features.user.IUserService;
+
+public interface ILoginService extends IAuthService {
     boolean validateCredentials(String email, String password);
 }

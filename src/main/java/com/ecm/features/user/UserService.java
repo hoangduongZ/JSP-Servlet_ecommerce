@@ -1,7 +1,5 @@
 package com.ecm.features.user;
 
-import java.security.MessageDigest;
-
 import com.ecm.features.user.dto.RegisterForm;
 import com.ecm.model.User;
 import com.ecm.util.AuthUtil;
@@ -28,7 +26,7 @@ public class UserService implements IUserService {
         user.setPasswordHash(AuthUtil.hashPassword(form.getPassword()));
         user.setPhoneNumber(form.getPhone());
         user.setRole("USER");
-        return userDAO.createUser(user);
+        return userDAO.registerUser(user);
     }
 
     public User getUserByEmail(String email) {

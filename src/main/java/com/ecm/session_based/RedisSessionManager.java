@@ -3,6 +3,7 @@ package com.ecm.session_based;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
+import java.util.Map;
 import java.util.UUID;
 
 public class RedisSessionManager {
@@ -20,6 +21,16 @@ public class RedisSessionManager {
         String redisKey = PREFIX + sessionId;
         try (Jedis jedis = jedisPool.getResource()) {
             jedis.hset(redisKey, name, value);
+            jedis.expire(redisKey, EXPIRE_SECONDS);
+        }
+        return sessionId;
+    }
+
+    public String createSession(Map<String, String> attributes) {
+        String sessionId = UUID.randomUUID().toString();
+        String redisKey = PREFIX + sessionId;
+        try (Jedis jedis = jedisPool.getResource()) {
+            jedis.hset(redisKey, attributes);
             jedis.expire(redisKey, EXPIRE_SECONDS);
         }
         return sessionId;

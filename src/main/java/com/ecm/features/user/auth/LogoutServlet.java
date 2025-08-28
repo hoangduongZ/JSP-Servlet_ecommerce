@@ -1,4 +1,4 @@
-package com.ecm.features.user;
+package com.ecm.features.user.auth;
 
 import com.ecm.session_based.RedisLoadProperties;
 import com.ecm.session_based.RedisSessionManager;
