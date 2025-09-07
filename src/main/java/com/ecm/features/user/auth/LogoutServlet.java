@@ -36,7 +36,7 @@ public class LogoutServlet extends HttpServlet {
             }
         }
         GlobalUtil.clearListSession(redisSessionManager, sessionId, rememberMeToken);
-        GlobalUtil.clearListCookie(resp, sessionId, rememberMeToken);
+        GlobalUtil.clearListCookie(resp, "APP_SESSION","REMEMBERME");
         resp.sendRedirect("/login");
     }
 }

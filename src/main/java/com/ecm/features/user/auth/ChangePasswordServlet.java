@@ -1,7 +1,5 @@
 package com.ecm.features.user.auth;
 
-import com.ecm.util.GlobalUtil;
-import jdk.nashorn.internal.objects.Global;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
