@@ -49,12 +49,15 @@ public class UserDAO implements IUserDAO{
         try {
             conn = DBUtil.getInstance().getConnection();
             ps = conn.prepareStatement(
-                    "INSERT INTO users (full_name, email, password_hash, phone_number, role) VALUES (?, ?, ?, ?, ?)");
+                    "INSERT INTO users (full_name, email, password_hash, phone_number, role, google_id, avatar_url) " +
+                            "VALUES (?, ?, ?, ?, ?, ?, ?)");
             ps.setString(1, user.getFullName());
             ps.setString(2, user.getEmail());
             ps.setString(3, user.getPasswordHash());
             ps.setString(4, user.getPhoneNumber());
             ps.setString(5, user.getRole());
+            ps.setString(6, user.getGoogleId());
+            ps.setString(7, user.getAvatarUrl());
             return ps.executeUpdate() == 1;
         } catch (Exception e) {
             logger.error("Error creating user with email: {}", user.getEmail(), e);
@@ -98,5 +101,59 @@ public class UserDAO implements IUserDAO{
             logger.error("Error fetching user by email: {}", email, e);
         }
         return null;
+    }
+
+    @Override
+    public User findByGoogleId(String googleId) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = DBUtil.getInstance().getConnection();
+            ps = conn.prepareStatement("SELECT * FROM users WHERE google_id = ?");
+            ps.setString(1, googleId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                User user = new User();
+                user.setUserId(rs.getInt("user_id"));
+                user.setFullName(rs.getString("full_name"));
+                user.setEmail(rs.getString("email"));
+                user.setPasswordHash(rs.getString("password_hash"));
+                user.setPhoneNumber(rs.getString("phone_number"));
+                user.setRole(rs.getString("role"));
+                return user;
+            }
+            logger.info("User found with google_id: {}", googleId);
+        } catch (SQLException e) {
+            logger.error("Error fetching user by google_id: {}", googleId, e);
+        }
+        return null;
+    }
+
+    public void updateAvatar(User user) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = DBUtil.getInstance().getConnection();
+            ps = conn.prepareStatement(
+                    "UPDATE users SET avatar_url = ? WHERE user_id = ?");
+            ps.setString(1, user.getFullName());
+            ps.setInt(2, user.getUserId());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            logger.error("Error updating user with ID: {}", user.getUserId(), e);
+        } finally {
+            try {
+                if (ps != null)
+                    ps.close();
+            } catch (SQLException e) {
+                logger.error("Error closing PreparedStatement", e);
+            }
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException e) {
+                logger.error("Error closing Connection", e);
+            }
+        }
     }
 }

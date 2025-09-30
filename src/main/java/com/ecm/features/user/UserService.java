@@ -29,8 +29,21 @@ public class UserService implements IUserService {
         return userDAO.registerUser(user);
     }
 
+    public User registerUser(User user) {
+        userDAO.registerUser(user);
+        return user;
+    }
+
     public User getUserByEmail(String email) {
         return userDAO.getUserByEmail(email);
     }
 
+    @Override
+    public User findByGoogleId(String googleId) {
+        return null;
+    }
+
+    public void updateAvatar(User user) {
+        userDAO.updateAvatar(user);
+    }
 }

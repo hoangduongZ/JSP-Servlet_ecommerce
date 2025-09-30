@@ -14,6 +14,8 @@ public class User {
     private String passwordHash;
     private String phoneNumber;
     private String role;
+    private String googleId;
+    private String avatarUrl;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 

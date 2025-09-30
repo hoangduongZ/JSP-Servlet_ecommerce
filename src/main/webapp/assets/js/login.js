@@ -69,7 +69,7 @@ function quickLogin(type) {
 
 // Social login functions
 function loginWithGoogle() {
-    alert('The feature is developing...');
+    window.location.href = '/auth/google';
     // Here you would redirect to Google OAuth
 }
 

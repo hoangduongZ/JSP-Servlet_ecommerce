@@ -1,4 +1,8 @@
-package com.ecm.session_based;
+package com.ecm.filter;
+
+import com.ecm.session_based.RedisLoadProperties;
+import com.ecm.session_based.RedisSessionManager;
+import com.ecm.session_based.RememberMeManager;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -13,10 +17,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-;
 
 //@WebFilter("/*")
-public class RedisSessionFilter implements Filter {
+public class AuthenticationFilter implements Filter {
     private final RedisSessionManager sessionManager = new RedisSessionManager(RedisLoadProperties.getPool());
     private final RememberMeManager rememberMeManager = new RememberMeManager(RedisLoadProperties.getPool());
     private final int TIMEOUT = 30 * 60; // 30 minutes
@@ -67,7 +70,8 @@ public class RedisSessionFilter implements Filter {
     private boolean isPublicPath(String path) {
         return path.endsWith("/login") || path.endsWith("/register")
                 || path.endsWith("/") || path.contains("/home")
-                || path.contains("/css/") || path.contains("/js/") || path.contains("/assets/");
+                || path.contains("/css/") || path.contains("/js/") || path.contains("/assets/")
+                || path.contains("/auth/") || path.contains("/images/");
     }
 
     private Map<String, String> getSessionIdFromCookie(HttpServletRequest request) {
@@ -83,7 +87,6 @@ public class RedisSessionFilter implements Filter {
         }
         return result;
     }
-
 
     @Override
     public void destroy() {

@@ -115,3 +115,8 @@ CREATE TABLE log (
     ip_address    VARCHAR(45),                  -- IP tạo log
     created_at    TIMESTAMP DEFAULT now()       -- thời điểm log
 );
+
+-- Add Google OAuth fields to users table
+ALTER TABLE users
+    ADD COLUMN google_id VARCHAR(255) UNIQUE,
+    ADD COLUMN avatar_url TEXT;

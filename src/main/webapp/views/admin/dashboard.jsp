@@ -40,19 +40,19 @@
             <aside class="lg:col-span-1">
                 <div class="bg-white rounded-lg shadow-sm p-4">
                     <nav class="space-y-2">
-                        <a href="#" class="flex items-center space-x-3 bg-[#0D6EFD] text-white px-3 py-2 rounded-md font-medium">
+                        <a href="/admin/dashboard" class="flex items-center space-x-3 bg-[#0D6EFD] text-white px-3 py-2 rounded-md font-medium">
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
                             </svg>
                             <span>Dashboard</span>
                         </a>
-                        <a href="#" class="flex items-center space-x-3 text-[#6C757D] hover:bg-[#F8F9FA] px-3 py-2 rounded-md font-medium transition-colors duration-200">
+                        <a href="/admin/products" class="flex items-center space-x-3 text-[#6C757D] hover:bg-[#F8F9FA] px-3 py-2 rounded-md font-medium transition-colors duration-200">
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 2L3 7v11a1 1 0 001 1h3v-7h6v7h3a1 1 0 001-1V7l-7-5z"/>
                             </svg>
                             <span>Sản phẩm</span>
                         </a>
-                        <a href="order.jsp" class="flex items-center space-x-3 text-[#6C757D] hover:bg-[#F8F9FA] px-3 py-2 rounded-md font-medium transition-colors duration-200">
+                        <a href="/admin/orders" class="flex items-center space-x-3 text-[#6C757D] hover:bg-[#F8F9FA] px-3 py-2 rounded-md font-medium transition-colors duration-200">
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                             </svg>
@@ -296,7 +296,7 @@
     <footer class="bg-[#F8F9FA] border-t border-gray-200 mt-12">
         <div class="container mx-auto max-w-[1200px] p-6">
             <div class="text-center text-sm text-[#6C757D]">
-                ? 2025 E-commerce Admin Panel. Phi?n b?n 1.0.0
+                 2025 E-commerce Admin Panel. Phien ban 1.0.0
             </div>
         </div>
     </footer>
@@ -308,15 +308,16 @@
             const navLinks = document.querySelectorAll('aside nav a');
             navLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    // Remove active class from all links
-                    navLinks.forEach(l => {
-                        l.classList.remove('bg-[#0D6EFD]', 'text-white');
-                        l.classList.add('text-[#6C757D]', 'hover:bg-[#F8F9FA]');
-                    });
-                    // Add active class to clicked link
-                    this.classList.add('bg-[#0D6EFD]', 'text-white');
-                    this.classList.remove('text-[#6C757D]', 'hover:bg-[#F8F9FA]');
+                    // e.preventDefault();
+                    // // Remove active class from all links
+                    // navLinks.forEach(l => {
+                    //     l.classList.remove('bg-[#0D6EFD]', 'text-white');
+                    //     l.classList.add('text-[#6C757D]', 'hover:bg-[#F8F9FA]');
+                    // });
+                    // // Add active class to clicked link
+                    // this.classList.add('bg-[#0D6EFD]', 'text-white');
+                    // this.classList.remove('text-[#6C757D]', 'hover:bg-[#F8F9FA]');
+
                 });
             });
 

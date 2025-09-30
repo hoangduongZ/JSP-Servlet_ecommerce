@@ -21,16 +21,17 @@ import java.util.Map;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
-    private final ILoginService loginService = new LoginService();
     private final UserService userService = new UserService();
     private RedisSessionManager sessionManager;
     private RememberMeManager rememberMeManager;
+    private ILoginService loginService;
 
     @Override
     public void init() {
         // Khởi tạo pool Redis 1 lần khi servlet load
         sessionManager = new RedisSessionManager(RedisLoadProperties.getPool());
         rememberMeManager = new RememberMeManager(RedisLoadProperties.getPool());
+        loginService = new LoginService(sessionManager, rememberMeManager);
     }
 
     @Override
@@ -60,34 +61,11 @@ public class LoginServlet extends HttpServlet {
 
         if (loginService.validateCredentials(email, password)) {
             User user = userService.getUserByEmail(email);
-            Map<String, String> attributes = saveUserInSession(req, user);
-            String sessionId = sessionManager.createSession(attributes);
-
-            // Set cookie sessionId về cho client
-            Cookie cookie = new Cookie("APP_SESSION", sessionId);
-            cookie.setHttpOnly(true);
-            cookie.setPath("/");
-            cookie.setMaxAge(30 * 60);
-            resp.addCookie(cookie);
-
-            // handle for remember me
-            if (rememberMe != null) {
-                rememberMeManager.createRememberMe(String.valueOf(user.getUserId()), resp);
-            }
-
+            loginService.handleLoginSuccess(req, resp, user, rememberMe != null);
             resp.sendRedirect("/admin/dashboard");
         } else {
             req.setAttribute("error", "Sai email hoặc mật khẩu!");
             req.getRequestDispatcher("/views/auth/login.jsp").forward(req, resp);
         }
-    }
-
-    private Map<String, String> saveUserInSession(HttpServletRequest req, User user) {
-        Map<String, String> attributes = new HashMap<>();
-        attributes.put("userId", String.valueOf(user.getUserId()));
-        attributes.put("email", user.getEmail());
-        attributes.put("role", user.getRole());
-        sessionManager.createSession(attributes);
-        return attributes;
     }
 }
