@@ -3,36 +3,157 @@ package com.ecm.features.user;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.ecm.exception.EcmException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.ecm.model.User;
 import com.ecm.util.DBUtil;
 
-public class UserDAO {
+public class UserDAO implements IUserDAO{
+    private final Logger logger = LoggerFactory.getLogger(UserDAO.class);
+
     public boolean isEmailExists(String email) {
-        try (Connection conn = DBUtil.getInstance().getConnection();
-             PreparedStatement ps = conn.prepareStatement("SELECT 1 FROM users WHERE email = ?")) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = DBUtil.getInstance().getConnection();
+            ps = conn.prepareStatement("SELECT 1 FROM users WHERE email = ?");
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
             return rs.next();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (EcmException | SQLException e) {
+            logger.error("Error checking email existence: {}", email, e);
             return true;
+        } finally {
+            try {
+                if (ps != null)
+                    ps.close();
+            } catch (SQLException e) {
+                logger.error("Error closing PreparedStatement", e);
+            }
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException e) {
+                logger.error("Error closing Connection", e);
+            }
         }
     }
 
-    public boolean createUser(User user) {
-        try (Connection conn = DBUtil.getInstance().getConnection();
-             PreparedStatement ps = conn.prepareStatement(
-                 "INSERT INTO users (full_name, email, password_hash, phone_number, role) VALUES (?, ?, ?, ?, ?)")) {
+    public boolean registerUser(User user) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = DBUtil.getInstance().getConnection();
+            ps = conn.prepareStatement(
+                    "INSERT INTO users (full_name, email, password_hash, phone_number, role, google_id, avatar_url) " +
+                            "VALUES (?, ?, ?, ?, ?, ?, ?)");
             ps.setString(1, user.getFullName());
             ps.setString(2, user.getEmail());
             ps.setString(3, user.getPasswordHash());
             ps.setString(4, user.getPhoneNumber());
             ps.setString(5, user.getRole());
+            ps.setString(6, user.getGoogleId());
+            ps.setString(7, user.getAvatarUrl());
             return ps.executeUpdate() == 1;
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Error creating user with email: {}", user.getEmail(), e);
             return false;
+        } finally {
+            try {
+                if (ps != null)
+                    ps.close();
+            } catch (SQLException e) {
+                logger.error("Error closing PreparedStatement", e);
+            }
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException e) {
+                logger.error("Error closing Connection", e);
+            }
+        }
+    }
+
+    public User getUserByEmail(String email) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = DBUtil.getInstance().getConnection();
+            ps = conn.prepareStatement("SELECT * FROM users WHERE email = ?");
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                User user = new User();
+                user.setUserId(rs.getInt("user_id"));
+                user.setFullName(rs.getString("full_name"));
+                user.setEmail(rs.getString("email"));
+                user.setPasswordHash(rs.getString("password_hash"));
+                user.setPhoneNumber(rs.getString("phone_number"));
+                user.setRole(rs.getString("role"));
+                return user;
+            }
+            logger.info("No user found with email: {}", email);
+        } catch (SQLException e) {
+            logger.error("Error fetching user by email: {}", email, e);
+        }
+        return null;
+    }
+
+    @Override
+    public User findByGoogleId(String googleId) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = DBUtil.getInstance().getConnection();
+            ps = conn.prepareStatement("SELECT * FROM users WHERE google_id = ?");
+            ps.setString(1, googleId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                User user = new User();
+                user.setUserId(rs.getInt("user_id"));
+                user.setFullName(rs.getString("full_name"));
+                user.setEmail(rs.getString("email"));
+                user.setPasswordHash(rs.getString("password_hash"));
+                user.setPhoneNumber(rs.getString("phone_number"));
+                user.setRole(rs.getString("role"));
+                return user;
+            }
+            logger.info("User found with google_id: {}", googleId);
+        } catch (SQLException e) {
+            logger.error("Error fetching user by google_id: {}", googleId, e);
+        }
+        return null;
+    }
+
+    public void updateAvatar(User user) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = DBUtil.getInstance().getConnection();
+            ps = conn.prepareStatement(
+                    "UPDATE users SET avatar_url = ? WHERE user_id = ?");
+            ps.setString(1, user.getFullName());
+            ps.setInt(2, user.getUserId());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            logger.error("Error updating user with ID: {}", user.getUserId(), e);
+        } finally {
+            try {
+                if (ps != null)
+                    ps.close();
+            } catch (SQLException e) {
+                logger.error("Error closing PreparedStatement", e);
+            }
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException e) {
+                logger.error("Error closing Connection", e);
+            }
         }
     }
 }

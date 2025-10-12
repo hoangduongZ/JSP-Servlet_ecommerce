@@ -30,8 +30,6 @@
         </connectionSource>
     </appender>
 
-
-
     <!-- DEBUG < INFO < WARN < ERROR -->
     <root level="debug">  
         <appender-ref ref="CONSOLE" />
