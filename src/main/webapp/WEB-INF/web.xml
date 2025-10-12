@@ -70,20 +70,12 @@
 
 <!--   START FILTER-->
     <filter>
-        <filter-name>authenticationFilter</filter-name>
-        <filter-class>com.ecm.filter.AuthenticationFilter</filter-class>
-    </filter>
-    <filter>
-        <filter-name>authorizationFilter</filter-name>
-        <filter-class>com.ecm.filter.AuthorizationFilter</filter-class>
+        <filter-name>securityFilter</filter-name>
+        <filter-class>com.ecm.filter.SecurityFilter</filter-class>
     </filter>
 
     <filter-mapping>
-        <filter-name>authenticationFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-    <filter-mapping>
-        <filter-name>authorizationFilter</filter-name>
+        <filter-name>securityFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 <!--    END FILTER-->

@@ -39,3 +39,9 @@ build/
 
 ### Other ###
 /global-info
+# Security files
+oauth.json
+global-info
+
+# Log files
+logs/*.log
